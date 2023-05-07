@@ -2,7 +2,7 @@ from logging import basicConfig
 
 from aiohttp import web
 
-from src.config import get_config, Config
+from src.config import Config, get_config
 from src.converter.routes import routes as converter_routes
 from src.converter.service import init_service
 from src.middlewares import error_middleware

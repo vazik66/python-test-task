@@ -1,13 +1,15 @@
 from logging import getLogger
 
-from aiohttp import web
+from aiohttp import typedefs, web
 from pydantic import ValidationError
 
 log = getLogger(__name__)
 
 
 @web.middleware
-async def error_middleware(request, handler):
+async def error_middleware(
+    request: web.Request, handler: typedefs.Handler
+) -> web.StreamResponse:
     try:
         response = await handler(request)
         return response

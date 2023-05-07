@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 from logging import getLogger
 
 from aiohttp import web
-
 from redis.asyncio import Redis
 
 log = getLogger(__name__)

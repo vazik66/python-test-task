@@ -1,5 +1,5 @@
-from src.redis import StorageInMemory, RedisStorage
 from src.converter.service import ConvertService
+from src.redis import RedisStorage, StorageInMemory
 
 
 async def test_convertaion():

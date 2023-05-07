@@ -10,7 +10,7 @@ log = getLogger(__name__)
 
 
 @routes.get("/convert")
-async def convert_currency_handler(req: web.Request):
+async def convert_currency_handler(req: web.Request) -> web.Response:
     convert_service: ConvertService = req.app["convert_service"]
     convert_params = ConvertCurrecnyQuery(**req.query)
 
@@ -20,7 +20,7 @@ async def convert_currency_handler(req: web.Request):
 
 
 @routes.post("/database")
-async def update_currency_rates(req: web.Request):
+async def update_currency_rates(req: web.Request) -> web.Response:
     convert_service: ConvertService = req.app["convert_service"]
     update_params = UpdateRatesQuery(**req.query)
 

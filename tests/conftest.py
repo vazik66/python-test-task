@@ -1,10 +1,12 @@
 from collections.abc import AsyncGenerator
-from src.main import init_app
-from src.config import get_config, Config
-from src.redis import RedisStorage
-from redis.asyncio import Redis
-from aiohttp import web
+
 import pytest
+from aiohttp import web
+from redis.asyncio import Redis
+
+from src.config import Config, get_config
+from src.main import init_app
+from src.redis import RedisStorage
 
 
 @pytest.fixture
