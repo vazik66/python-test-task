@@ -8,7 +8,7 @@ Convert amount from currency 'from' to currency 'to'
 - POST /database?merge=1
 Set data to currency
 If merge == 0, old data is invalidated
-If merge == 1, New data updates old, but if not updated old data is stays actual 
+If merge == 1, New data updates old, but if not updated old data stays actual 
 
 - Responses are in json
 
