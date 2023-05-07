@@ -29,5 +29,9 @@ async def update_currency_rates(req: web.Request) -> web.Response:
         update_data = UpdateRatesBody.parse_raw(await req.text())
 
     log.debug(f"Updating rates with {update_params=} {update_data=}")
-    await convert_service.update(update_params, update_data)
+    try:
+        await convert_service.update(update_params, update_data)
+    except ValueError as exc:
+        raise web.HTTPBadRequest(reason=str(exc)) from exc
+
     return web.json_response({"success": True})

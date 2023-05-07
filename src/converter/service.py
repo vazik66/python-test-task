@@ -16,14 +16,15 @@ class ConvertService:
     async def update(
         self, params: UpdateRatesQuery, data: UpdateRatesBody | None
     ) -> NoReturn:
-        if not params.merge:
+        if params.merge == 0:
             await self.storage.flush()
-        elif params.merge and data:
+        elif params.merge == 1 and data is not None:
             prepared_data = [
                 (pair.currency_pair, str(pair.rate)) for pair in data.pairs
             ]
             await self.storage.bulk_set(prepared_data)
-        raise Exception("When merge=1, body must be provided")
+        else:
+            raise ValueError("When merge=1, body must be provided")
 
     async def convert_currency(self, convert: ConvertCurrecnyQuery) -> float:
         key = f"{convert.from_}/{convert.to}"

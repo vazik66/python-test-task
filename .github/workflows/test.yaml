@@ -2,8 +2,20 @@ name: Test
 on: [push]
 
 jobs:
-  build:
+  container-job:
     runs-on: ubuntu-latest
+    container: node:10.18-jessie
+
+    services:
+      redis:
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     strategy:
       matrix:
         python-version: ["3.10", "3.11"]
@@ -21,4 +33,10 @@ jobs:
           pip install -r requirements.dev.txt
       - name: Test with pytest
         run: python -m pytest --asyncio-mode=auto
-          
+        env:
+          APP_HOST: 0.0.0.0
+          APP_PORT: 8080
+          LOG_LEVEL: INFO
+          REDIS_HOST: redis
+          REDIS_PORT: 6379
+          REDIS_PASSWORD: ''

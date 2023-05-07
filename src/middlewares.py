@@ -14,6 +14,10 @@ async def error_middleware(
         response = await handler(request)
         return response
 
+    except web.HTTPException as exc:
+        message = exc.reason
+        status = exc.status_code
+
     except ValidationError as exc:
         message = exc.errors()
         status = 422
