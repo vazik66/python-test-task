@@ -4,23 +4,18 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ubuntu:latest
-    services:
-      
-      redis:
-        image: redis
-        # Set health checks to wait until redis has started
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     strategy:
       matrix:
         python-version: ["3.10", "3.11"]
+        redis-version: [6]
 
     steps:
+      - uses: supercharge/redis-github-action@1.5.0
+      - name: Set up Redis ${{  matrix.redis-version }}
+        with:
+          redis-version: ${{ matrix.redis-version }}
+  
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
