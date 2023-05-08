@@ -11,13 +11,13 @@ jobs:
         redis-version: [6]
 
     steps:
-      - uses: supercharge/redis-github-action@1.5.0
       - name: Set up Redis ${{  matrix.redis-version }}
+        uses: supercharge/redis-github-action@1.5.0
         with:
           redis-version: ${{ matrix.redis-version }}
   
-      - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
+      - uses: actions/checkout@v3
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -27,6 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install -r requirements.dev.txt
+
       - name: Test with pytest
         run: python -m pytest --asyncio-mode=auto
         env:
